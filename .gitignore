@@ -4,4 +4,4 @@
 *.iws
 
 # Maven build files
-/target
+target/

@@ -2,14 +2,14 @@
     <modelVersion>4.0.0</modelVersion>
     <inceptionYear>2011</inceptionYear>
     <groupId>info.somethingodd</groupId>
-    <artifactId>odditem-server</artifactId>
+    <artifactId>server</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <name>odditem-server</name>
-    <url>http://somethingodd.info/odditem-server</url>
+    <name>server</name>
+    <url>http://somethingodd.info/server</url>
     <parent>
         <groupId>info.somethingodd</groupId>
-        <artifactId>somethingodd-parent</artifactId>
-        <version>1.1.0-SNAPSHOT</version>
+        <artifactId>parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
     <build>
         <resources>
@@ -25,6 +25,23 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>info.somethingodd.server.Server</mainClass>
+                        </manifest>
+                        <manifestEntries>
+                            <Class-Path>./</Class-Path>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>1.5</version>
                 <executions>
@@ -33,7 +50,7 @@
                         <configuration>
                             <artifactSet>
                                 <includes>
-                                    <include>info.somethingodd:odditem-common</include>
+                                    <include>info.somethingodd:common</include>
                                 </includes>
                             </artifactSet>
                         </configuration>
@@ -48,13 +65,33 @@
     <dependencies>
         <dependency>
             <groupId>info.somethingodd</groupId>
-            <artifactId>odditem-common</artifactId>
+            <artifactId>common</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>9.1-901-1.jdbc4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>jline</groupId>
+            <artifactId>jline</artifactId>
+            <version>2.6</version>
         </dependency>
     </dependencies>
     <distributionManagement>
@@ -108,4 +145,8 @@
         <system>GitHub</system>
         <url>https://github.com/somethingodd/${project.name}/issues</url>
     </issueManagement>
+    <properties>
+        <slf4j.version>1.6.4</slf4j.version>
+        <logback.version>1.0.1</logback.version>
+    </properties>
 </project>
